@@ -1,40 +1,51 @@
 <?php
- class Database{
-  private $server='localhost';
-  private $user='root';
-  private $pass='';
-  private $dbname='login_form';
 
-  private $table='users';
+Class Database{
 
-  public function InsertUsers($email,$password,$repassword){
-    $conn=new mysqli(
-    $this->server,
-    $this->user,
-    $this->pass, 
-    $this->dbname
-    );
+    private $server ='localhost';
+    private $user = 'root';
+    private $pass = '';
+    private $dbname = 'login_form';
 
-    if($conn->connect_error){
-      die("connection erro".$conn->connect_error);
+    private $table ='users';
+
+    public function InsertSportTable($name,$password)
+    {
+      $conn= new mysqli(
+        $this->server,
+        $this->user,
+        $this->pass,
+
+
+        $this->dbname
+      );
+
+      if($conn->connect_error){
+        die("connection failed: ".$conn->connect_error);}
+    
+        
+        $sql="INSERT INTO $this->table(name , password ) VALUES ('$name ','$password')";
+        
+        if ($conn->query($sql)===TRUE){
+            echo"NEW record created sucessfully";}
+            
+        
+        else{
+            echo"ERROR".$sql."<br>".$conn->error;
+        }
+        $conn->close();
+      }
+      
+
+
     }
-    $sql="INSERT INTO $this->table ( `email`, `password`, `repassword`) VALUES ('$email','$password','$repassword')";
+    $sport=new Database;
+    $name= 'user';
+    $password= 'pass';
 
-    if($conn->query($sql)===TRUE){
-      echo"NEW RECORDS UPDATED";
-    }
-    else{
-      echo"ERROR:".$sql."</br>".$conn_error;
-    }
-    $conn->close();
+    $sport->InsertSportTable($name,$password);
 
-  }
   
 
- }
- $yug=new Database;
- $email=$_POST['email'];
- $password=$_POST['pass'];
- $repassword=$_POST['repass'];
- $yug->InsertUsers($email,$password,$repassword);
+
 ?>
